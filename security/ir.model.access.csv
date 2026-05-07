@@ -1,0 +1,2 @@
+id,name,model_id:id,gruop_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_gestion_tarea_user,access.gestion.tarea.user,model_gestion_tarea,base.group_user,1,1,1,1
