@@ -30,3 +30,17 @@ class Tarea(models.Model):
         default="pendiente",
         required=True
     )
+
+    def action_marcar_como_finalizada(self):
+        for tarea in self:
+            tarea.estado = "finalizada"
+    
+    def obtener_tareas_por_clientes(self, cliente_id):
+        return self.search([
+            ("cliente_id", "=", cliente_id)
+        ])
+
+    def obtener_tareas_pendientes(self):    
+        return self.search([
+            ("estado", "=", "pendiente")
+        ])
