@@ -1,4 +1,4 @@
-from odoo import models, fields, api
+from odoo import models, fields
 
 class Tarea(models.Model):
     _name = "gestion.tarea"
@@ -6,7 +6,7 @@ class Tarea(models.Model):
     _order = "fecha desc, id desc"
 
     name = fields.Char(
-        string="Nombre de la tarea", 
+        string="Nombre de la tarea",
         required=True
     )
 
@@ -25,7 +25,7 @@ class Tarea(models.Model):
         selection=[
             ("pendiente", "Pendiente"),
             ("finalizada", "Finalizada"),
-            ],
+        ],
         string="Estado",
         default="pendiente",
         required=True
@@ -34,13 +34,9 @@ class Tarea(models.Model):
     def action_marcar_como_finalizada(self):
         for tarea in self:
             tarea.estado = "finalizada"
-    
-    def obtener_tareas_por_clientes(self, cliente_id):
-        return self.search([
-            ("cliente_id", "=", cliente_id)
-        ])
 
-    def obtener_tareas_pendientes(self):    
-        return self.search([
-            ("estado", "=", "pendiente")
-        ])
+    def obtener_tareas_por_clientes(self, cliente):
+        return self.search([("cliente_id", "=", cliente.id)])
+
+    def obtener_tareas_pendientes(self):
+        return self.search([("estado", "=", "pendiente")])
