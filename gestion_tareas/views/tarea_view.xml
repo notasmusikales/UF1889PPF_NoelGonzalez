@@ -64,7 +64,6 @@
                     <filter name="group_estado"
                             string="Estado"
                             context="{'group_by': 'estado'}"/>
-                </group>
 
             </search>
         </field>
