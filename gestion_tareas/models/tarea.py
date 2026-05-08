@@ -11,7 +11,7 @@ class Tarea(models.Model):
     )
 
     cliente_id = fields.Many2one(
-        cmodel_name="res.partner",
+        comodel_name="res.partner",
         string="Cliente",
         required=True
     )
