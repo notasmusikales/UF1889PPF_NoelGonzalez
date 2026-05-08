@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Definición de la vista de la lista -->
+    <record id="view_gestion_tarea_list" model="ir.ui.view">
+    <!--Vista formulario -->
+        <field name="name">gestion.tarea.list</field>
+        <field name="model">gestion.tarea</field>
+        <field name="arch" type="xml">
+            <list string="Tareas">
+                <field name="nombre"/>
+                <field name="cliente_id"/>
+                <field name="fecha"/>
+                <field name="estado"/>
+        </field>
+    </record>
+
+    <record id="view_gestion_tarea_form" model="ir.ui.view">
+        <field name="name">gestion.tarea.form</field>
+        <field name="model">gestion.tarea</field>
+        <field name="arch" type="xml">
+            <form string="Tareas">
+                <header>
+                    <button name="action_marcar_finalizada"
+                    type="object" 
+                    string="Marcar como Finalizada" 
+                    class="btn-primary" 
+                    invisible="estado == 'finalizada'"/>
+                </header>
+
+                <sheet>
+                    <group>
+                        <field name="nombre"/>
+                        <field name="cliente_id"/>
+                        <field name="fecha"/>
+                        <field name="estado"/>
+                    </group>
+                </sheet>        
+                <field name="due_date"/>
+            </form>
+        </field>
+    </record>
+
+    <--! Vista búsqueda -->
+    <record id="action_gestion_tarea_search" model="ir.ui.window">
+        <field name="name">gestion.tarea.search</field>
+        <field name="res_model">gestion.tarea</field>
+        <field name="arch" type="xml">
+            <search string="Buscar Tareas">
+                <field name="nombre"/>
+                <field name="cliente_id"/>
+                <filter name="filter_pendientes" 
+                        string="Tareas Pendientes"
+                        domain="[('estado', '=', 'pendiente')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_cliente" 
+                            string="Cliente"
+                            context="{'group_by':'cliente_id'}"/>    
+                    <filter name="group_estado" 
+                            string="Estado" 
+                            domain="[('group_by', '=', 'estado')]"/>
+                    </group>
+            </search>
+        </field>
+    </record>
+
+<!-- Acción de ventana-->
+<!-- Permite abrir el modelo desde el menú -->
+<record id="action_gestion_tarea" model="ir.actions.act_window">
+    <field name="name">Tareas</field>
+    <field name="res_model">gestion.tarea</field>
+    <field name="view_mode">list,form</field>
+    <field name="search_view_id" ref="action_gestion_tarea_search"/>
+</record>
+
+<-- Menú principal del módulo  -->
+<menuitem id="menu_gestion_tarea_root" 
+            name="Gestión de Tareas"
+            sequence="10"/>
+<menuitem id="menu_gestion_tarea" 
+                name="Tareas" 
+                parent="menu_gestion_tarea_root" 
+                action="action_gestion_tarea"
+                sequence="10"/>
+
+<odoo/>
